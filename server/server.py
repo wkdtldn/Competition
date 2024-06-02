@@ -3,8 +3,10 @@ import flask
 import json
 import mysql.connector
 from Edit import edit
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 trash_db = mysql.connector.connect(
     host="localhost",

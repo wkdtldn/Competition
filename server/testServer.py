@@ -1,37 +1,70 @@
 from flask import Flask, request, jsonify
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_cors import CORS
+import json
+import mysql.connector
 
 app = Flask(__name__)
-app.config['JWT_SECRET_KEY'] = 'your_secret_key'  # JWT에 사용될 비밀 키 설정
+app.config['JWT_SECRET_KEY'] = 'just_my_own_secret_key'
 jwt = JWTManager(app)
+CORS(app)
 
-# 사용자 정보 (임시로 딕셔너리 형태로 저장)
-users = {
-    'user1': 'password1',
-    'user2': 'password2'
-}
+users = mysql.connector.connect(
+    host="localhost",
+    user="jangsiu",
+    password="Wkdtldn.mat18!",
+    database="Users",
+    use_unicode=True
+)
+
+cursor = users.cursor()
 
 # 회원가입 엔드포인트
-@app.route('/register', methods=['POST'])
+@app.route('/register', methods=['GET','POST'])
 def register():
-    username = request.json.get('username')
+    print(request.method)
+    
+    nickname = request.json.get('nickname')
     password = request.json.get('password')
+    email = request.json.get('email')
 
-    if username in users:
-        return jsonify({'message': 'Username already exists'}), 400
+    sql = "SELECT * FROM User"
+    cursor.execute(sql)
 
-    users[username] = generate_password_hash(password)
+    users = cursor.fetchall()
+
+    for user in users:
+        if user[1] == nickname:
+            return jsonify({'message' : 'Username already exists'}), 400
+
+    sql = 'INSERT INTO User (nickname, email, password, point) VALUES (%s, %s, %s, %d)'
+    val = (nickname,email,password, 0)
+
+    cursor.execute(sql,val)
+    users.commit()
+
     return jsonify({'message': 'User registered successfully'}), 200
 
 # 로그인 엔드포인트
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET','POST'])
 def login():
-    username = request.json.get('username')
+    print(request.method)
+
+    nickname = request.json.get('nickname')
     password = request.json.get('password')
 
-    if username not in users or not check_password_hash(users[username], password):
-        return jsonify({'message': 'Invalid username or password'}), 401
+    sql = "SELECT * FROM User"
+    cursor.execute(sql)
+
+    users = cursor.fetchall()
+
+    for user in users:
+        if user[1] == nickname:
+            if user[3] == password:
+                return jsonify({'message' : 'User login sucessfully'}), 200
+
+    return jsonify({'message': 'Invalid username or password'}), 401
 
     access_token = create_access_token(identity=username)
     return jsonify({'access_token': access_token}), 200
