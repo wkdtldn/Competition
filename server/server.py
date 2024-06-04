@@ -18,27 +18,38 @@ trash_db = mysql.connector.connect(
 
 cursor = trash_db.cursor()
 
-@app.route('/', methods=['GET','POST'])
-def main():
-    my_res = flask.Response()
-    my_res.headers["Access-Control-Allow-Origin"] = "*"
-    return "Hello World"
-
 @app.route('/api/data', methods=['GET','POST'])
 def post():
     print(request.method)
     sql = "SELECT * FROM wastes"
     cursor.execute(sql)
 
-    result = cursor.fetchall()
+    wastes = cursor.fetchall()
 
-    dict_res = edit(dbList=result)
+    dict_res = edit(dbList=wastes)
 
     return json.dumps(dict_res, ensure_ascii = False)
 
 @app.route('/search', methods=['GET','POST'])
 def search():
     print(request.method)
+
+    data = request.get_json()
+    targetTrash = data['trash']
+
+    sql = "SELECT * FROM wastes"
+    cursor.execute(sql)
+    
+    wastes = cursor.fetchall()
+
+    RelatedResult = List()
+        
+    for trash in wastes:
+        relatedWord = trash[1]
+        if targetTrash in relatedWord:
+            RelatedResult.append({"name" : trash[1],"image" : trash[4]})
+
+    return json.dump(RelatedResult, ensure_ascii = False)
     
 
 if __name__ == "__main__":
