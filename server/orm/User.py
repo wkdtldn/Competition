@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://jangsiu:Wkdtldn.mat18!@localhost/Trash_db'  # MySQL 연결 정보
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://jangsiu:Wkdtldn.mat18!@localhost/Trash_db'  # MySQL 연결 정보
 db = SQLAlchemy(app)
 
 
