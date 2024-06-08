@@ -21,7 +21,7 @@ class User(db.Model):
     point = db.Column(db.Integer)
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %r>' % self.nickname
 
 with app.app_context():
     db.create_all()
