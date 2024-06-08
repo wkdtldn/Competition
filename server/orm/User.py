@@ -22,12 +22,12 @@ with app.app_context():
 
 @app.route('/', methods=['GET','POST'])
 def main():
-    user = User(nickname="kakakaka", email="asdf1234@gmail.com")
-    db.session.add(user)
-    db.session.commit()
+    # user = User(nickname="kakakaka", email="asdf1234@gmail.com")
+    # db.session.add(user)
+    # db.session.commit()
 
     users = User.query.all()
     return '<br>'.join([user.nickname for user in users])
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=9080, debug=True)
+    app.run(host="0.0.0.0", port=8080, debug=True)
