@@ -32,7 +32,14 @@ def get_users():
     print(request.method)
 
     users = User.query.all()
-    return {"users" : users[0]}
+
+    list = {"users" : []}
+
+    for user in users:
+        list["users"].append({"id" : user.id, "nickname" : user.nickname, "email" : user.email, "password" : user.password, "image" : user.image, "point" : user.point})
+
+    return json.dumps(list, ensure_ascii=False)
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080, debug=True)
