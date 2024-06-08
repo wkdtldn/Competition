@@ -6,7 +6,6 @@ app = Flask(__name__)
 app.config.from_object(Config)
 app.secret_key = 'my_own_secret_key'
 
-
 db.init_app(app)
 
 with app.app_context():
@@ -116,4 +115,4 @@ def find_trash(ID):
              "image" : trash.image}]
 
 if __name__ == "__main__":
-    True
+    db.init_app()
