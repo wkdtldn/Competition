@@ -1,4 +1,4 @@
-from model import db, User, Trash, Point
+from models import db, User, Trash, Point
 from config import Config
 from flask import Flask, request, Response
 
