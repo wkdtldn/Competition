@@ -1,13 +1,11 @@
 from flask import Flask, jsonify, request, Response, current_app, g
 from functools import wraps
-from services.auth import login_required
 import flask
 import json
-import mysql.connector
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from datetime import datetime, timedelta
 from flask_cors import CORS
-from orm import api
+from app import api
 
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'just_my_own_secret_key'
