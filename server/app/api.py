@@ -1,4 +1,4 @@
-from __init__ import *
+from model import *
 from config import Config
 from flask import Flask, request, Response
 
