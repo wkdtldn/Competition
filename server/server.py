@@ -1,9 +1,12 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response, current_app, g
+from functools import wraps
+from services.auth import login_required
 import flask
 import json
 import mysql.connector
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from Edit import edit
+from datetime import datetime, timedelta
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -21,6 +24,38 @@ trash_db = mysql.connector.connect(
 )
 
 cursor = trash_db.cursor()
+
+## ------------------------------------------------------------------------------------------------
+
+# token을 decode하여 반환함, decode에 실패하는 경우 payload = None으로 반환
+def check_access_token(access_token):
+    try:
+        payload = jwt.decode(access_token, current_app.config['JWT_SECRET_KEY'], "HS256")
+        if payload['exp'] < datetime.utcnow():  # 토큰이 만료된 경우
+            payload = None
+    except jwt.InvalidTokenError:
+        payload = None
+    
+    return payload
+
+
+# decorator 함수
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwagrs):
+        access_token = request.headers.get('Authorization') # 요청의 토큰 정보를 받아옴
+        if access_token is not None: # 토큰이 있는 경우
+            payload = check_access_token(access_token) # 토큰 유효성 확인
+            if payload is None: # 토큰 decode 실패 시 401 반환
+                return Response(status=401)
+        else: # 토큰이 없는 경우 401 반환
+            return Response(status=401)
+
+        return f(*args, **kwagrs)
+
+    return decorated_function
+
+## ------------------------------------------------------------------------------------------------
 
 @app.route('/api/data', methods=['GET','POST'])
 def post():
@@ -90,7 +125,7 @@ def register():
     val = (nickname,email,password)
 
     cursor.execute(sql,val)
-    users.commit()
+    cursor.commit()
 
     return jsonify({'message' : 'User registered successfully'}), 200
 
@@ -111,7 +146,7 @@ def login():
         if user[2] != email or user[3] != password:
             return jsonify({'message' : 'Wrong email or password'}), 401
 
-    access_token = create_access_token(identity=nickname)
+    access_token = create_access_token(identity=email)
 
     return jsonify({'access_token': access_token}), 200
 
@@ -150,6 +185,28 @@ def ascending_rank(list):
     right_side = [x for x in tail if x["point"] > pivot["point"]]
 
     return ascending_rank(left_side) + [pivot] + ascending_rank(right_side)
+
+@app.route("/points", methods=['POST'])
+@login_required
+def create_point():
+    print(request.method)
+
+    data = request.get_json()
+    user_id = data["user_id"]
+    lat = data["lat"]
+    lnt = data["lnt"]
+
+    now = datetime.now()
+    date = now.strftime("%Y년 %m월 %d일")
+    time = now.strftime("%H:%M")
+
+    sql = "INSERT INTO point (user_id, lat, lnt, date, time) VALUES (%d, %lf, %lf, %s, %s)"
+    val = (user_id, lat, lnt, date, time)
+
+    cursor.execute(sql,val)
+    cursor.commit()
+
+    return jsonify({"message" : "You get a point!"})
 
 @app.route('/protected', methods=['GET'])
 @jwt_required()
