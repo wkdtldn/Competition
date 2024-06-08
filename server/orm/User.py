@@ -17,17 +17,13 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
-with app.app_context():
-    db.create_all()
+db.create_all()
 
 
-@app.route('/', methods=['GET','POST'])
-def main():
-    # user = User(nickname="kakakaka", email="asdf1234@gmail.com")
-    # db.session.add(user)
-    # db.session.commit()
-
+@app.route('/users')
+def get_users():
     users = User.query.all()
+    print(users)
     return json.dumps(users, ensure_ascii=False)
 
 if __name__ == '__main__':
