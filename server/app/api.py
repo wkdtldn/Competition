@@ -6,10 +6,12 @@ app = Flask(__name__)
 app.config.from_object(Config)
 app.secret_key = 'my_own_secret_key'
 
-db.init_app(app)
+def __init__():
 
-with app.app_context():
-    db.create_all()
+    db.init_app(app)
+
+    with app.app_context():
+        db.create_all()
 
 # User ---
 def get_users():
@@ -115,4 +117,4 @@ def find_trash(ID):
              "image" : trash.image}]
 
 if __name__ == "__main__":
-    db.init_app()
+    __init__()
