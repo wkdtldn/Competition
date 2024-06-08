@@ -33,7 +33,7 @@ def get_users():
 
     users = User.query.all()
     print(users)
-    return json.dumps(users, ensure_ascii=False)
+    return {"users" : users[0]}
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080, debug=True)
