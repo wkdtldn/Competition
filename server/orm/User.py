@@ -1,9 +1,9 @@
-from flask import Flask
+from flask import Flask, request, Response
 from flask_sqlalchemy import SQLAlchemy
 import json
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://jangsiu:Wkdtldn.mat18!@localhost/Trash_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysql-connector://jangsiu:Wkdtldn.mat18!@localhost/Trash_db'
 db = SQLAlchemy(app)
 
 
@@ -21,8 +21,10 @@ with app.app_context():
     db.create_all()
 
 
-@app.route('/users')
+@app.route('/users', methods=['GET','POST'])
 def get_users():
+    print(request.method)
+
     users = User.query.all()
     print(users)
     return json.dumps(users, ensure_ascii=False)
