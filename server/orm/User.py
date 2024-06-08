@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+import json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://jangsiu:Wkdtldn.mat18!@localhost/Trash_db'
@@ -27,7 +28,7 @@ def main():
     # db.session.commit()
 
     users = User.query.all()
-    return '<br>'.join([user.nickname for user in users])
+    return json.dumps(users, ensure_ascii=False)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080, debug=True)
