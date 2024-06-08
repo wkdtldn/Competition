@@ -1,16 +1,9 @@
-from flask import Flask, request, Response
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://jangsiu:Wkdtldn.mat18!@localhost/Trash_db?charset=utf8'
-app.config['SQLALCHEMY_ECHO'] = True
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-app.secret_key = 'my_own_secret_key'
-db = SQLAlchemy(app)
-db.init_app(app)
+db = SQLAlchemy()
 
 class User(db.Model):
     __tablename__ = "users"
@@ -49,9 +42,3 @@ class Point(db.Model):
     time = db.Column(db.Text, nullable=False)
 
     user = relationship("User")
-
-with app.app_context():
-    db.create_all()
-
-if __name__ == "__main__":
-    True
