@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysql-connector://jangsiu:Wkdtldn.mat18!@localhost/Trash_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://jangsiu:Wkdtldn.mat18!@localhost/Trash_db'
 db = SQLAlchemy(app)
 
 
