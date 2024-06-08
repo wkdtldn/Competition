@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://jangsiu:Wkdtldn.mat18!@localhost/Trash_db'  # MySQL 연결 정보
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://jangsiu:Wkdtldn.mat18!@localhost/Trash_db'
 db = SQLAlchemy(app)
 
 
@@ -16,7 +16,9 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
-db.create_all()
+with app.app_context():
+    db.create_all()
+
 
 @app.route('/', methods=['GET','POST'])
 def main():
