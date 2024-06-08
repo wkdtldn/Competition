@@ -17,7 +17,8 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
-db.create_all()
+with app.app_context():
+    db.create_all()
 
 
 @app.route('/users')
