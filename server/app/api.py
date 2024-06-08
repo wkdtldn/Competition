@@ -1,10 +1,14 @@
-from .models import db, User, Trash, Point
+from .models import User, Trash, Point
 from .config import Config
+from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, Response
 
 app = Flask(__name__)
 app.config.from_object(Config)
 app.secret_key = 'my_own_secret_key'
+
+db = SQLAlchemy(app)
+
 
 def __init__():
 
