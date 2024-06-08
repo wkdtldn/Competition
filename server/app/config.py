@@ -1,4 +1,4 @@
 class Config:
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://username:password@localhost/your_database'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://wkdtldn:Wkdtldn.mat18!@localhost/Trash_db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = True
