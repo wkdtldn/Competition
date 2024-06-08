@@ -32,7 +32,6 @@ def get_users():
     print(request.method)
 
     users = User.query.all()
-    print(users)
     return {"users" : users[0]}
 
 if __name__ == '__main__':
