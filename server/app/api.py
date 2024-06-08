@@ -1,5 +1,5 @@
-from models import db, User, Trash, Point
-from config import Config
+from .models import db, User, Trash, Point
+from .config import Config
 from flask import Flask, request, Response
 
 app = Flask(__name__)
