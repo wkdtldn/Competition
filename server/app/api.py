@@ -85,9 +85,6 @@ def delete_all_users():
         deleted_users = db.session.query(User).delete()
         db.session.commit()
 
-        import __hello__
-        __hello__.main()
-
         db.session.execute(text('ALTER TABLE users AUTO_INCREMENT = 1'))
         db.session.commit()
 
