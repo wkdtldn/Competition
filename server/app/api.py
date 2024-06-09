@@ -1,5 +1,5 @@
 from models import *
-from sqlalchemy import text
+from sqlalchemy import text, desc, asc
 
 # User --------------------------
 def get_users():
@@ -41,7 +41,7 @@ def login(email, password):
             return False
         
 def get_rank():
-    ranked_users = User.query.order_by(User.point.desc()).all()
+    ranked_users = User.query.order_by(asc(User.point)).all()
     
     print(ranked_users)
 
