@@ -90,7 +90,7 @@ def delete_all_users():
         return {"message" : f"Delete ALl Users({deleted_users})"}
     except Exception as e:
         db.session.rollback()
-        return {'error': str(e)}, 500
+        return {'error': str(e)}
     
 # Trash --------------------------
 def get_trash():
