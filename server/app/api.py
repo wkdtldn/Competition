@@ -54,9 +54,8 @@ def get_rank():
             "image" : user.image,
             "point" : user.point}
         )
-        print(rank_list)
 
-    return ranked_users
+    return rank_list
     
 def create_point(user_id, lat, lnt, image, date, time):
     point = Point(user_id=user_id, lat=lat, lnt=lnt, image=image, date=date, time=time)
