@@ -88,7 +88,7 @@ def delete_all_users():
         db.session.execute(text('ALTER TABLE users AUTO_INCREMENT = 1'))
         db.session.commit()
 
-        return {"message" : f"Delete ALl Users({deleted_users})"}
+        return {"message" : f"{deleted_users[0]} users have been deleted"}
     except Exception as e:
         db.session.rollback()
         return {'error': str(e)}
