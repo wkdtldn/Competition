@@ -43,6 +43,8 @@ def login(email, password):
 def get_rank():
     ranked_users = User.query.order_by(User.point.desc()).all()
     
+    print(ranked_users)
+
     rank_list = []
 
     for user in ranked_users:
