@@ -1,6 +1,6 @@
 from sqlalchemy import ForeignKey, Integer, Column, Text, String, Float
 from sqlalchemy.orm import relationship
-from Api import db
+from .api import db
 from sqlalchemy.ext.declarative import declarative_base
 
 class User(db.Model):
