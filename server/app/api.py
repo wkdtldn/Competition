@@ -1,15 +1,4 @@
-from flask import Flask, request, Response
-from .config import db
-from .model import *
-
-app = Flask(__name__)
-
-def __init__():
-
-    db.init_app(app)
-
-    with app.app_context():
-        db.create_all()
+from models import *
 
 # User ---
 def get_users():
@@ -35,11 +24,10 @@ def sign_up(nickname, email, password):
         if nickname == user.nickname:
             return {"message" : "Try another one"}
             
-    with app.app_context():
-        new_user = User(nickname=nickname, email=email, password=password)
-        db.session.add(new_user)
-        db.session.commit()
-        return {"message" : "Sign up Success"}
+    new_user = User(nickname=nickname, email=email, password=password)
+    db.session.add(new_user)
+    db.session.commit()
+    return {"message" : "Sign up Success"}
     
 def login(email, password):
     user = User.query.filter_by(email=email).all()
@@ -51,8 +39,7 @@ def login(email, password):
             return False
         
 def get_rank():
-    with app.app_context():
-        ranked_users = User.query.order_by(User.point.desc()).all()
+    ranked_users = User.query.order_by(User.point.desc()).all()
     
     rank_list = []
 
@@ -113,6 +100,3 @@ def find_trash(ID):
              "description" : trash.description,
              "disposal_method" : trash.disposal_method,
              "image" : trash.image}]
-
-if __name__ == "__main__":
-    __init__()
