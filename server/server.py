@@ -47,7 +47,7 @@ def login_required(f):
 ## ------------------------------------------------------------------------------------------------
 
 
-# Trash ---
+# Trash --------------------------
 @app.route('/trash/data', methods=['GET'])
 def trash_all():
     return json.dumps(api.get_trash(), ensure_ascii=False)
@@ -62,7 +62,7 @@ def trash_search():
     word = data['word']
     return api.__search__(keyword=word)
 
-# User ---
+# User --------------------------
 @app.route("/sign_up", methods=['POST'])
 def register():
     data = request.get_json()

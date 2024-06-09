@@ -1,6 +1,6 @@
 from models import *
 
-# User ---
+# User --------------------------
 def get_users():
     users = User.query.all()
 
@@ -60,7 +60,7 @@ def create_point(user_id, lat, lnt, image, date, time):
     db.session.commit()
     return True
     
-# Trash -- 
+# Trash --------------------------
 def get_trash():
     wastes = Trash.query.all()
 
@@ -95,8 +95,9 @@ def __search__(keyword):
 def find_trash(ID):
     trash = Trash.query.filter_by(id=ID).all()
 
-    return [{"id" : trash.id,
-             "name" : trash.name,
-             "description" : trash.description,
-             "disposal_method" : trash.disposal_method,
-             "image" : trash.image}]
+
+    return [{"id" : trash[0].id,
+             "name" : trash[0].name,
+             "description" : trash[0].description,
+             "disposal_method" : trash[0].disposal_method,
+             "image" : trash[0].image}]
