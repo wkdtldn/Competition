@@ -85,12 +85,13 @@ def delete_all_users():
         deleted_users = db.session.query(User).delete()
         db.session.commit()
 
-        print(deleted_users)
+        import __hello__
+        __hello__.main()
 
         db.session.execute(text('ALTER TABLE users AUTO_INCREMENT = 1'))
         db.session.commit()
 
-        return {"message" : f"{deleted_users[0]} users have been deleted"}
+        return {"message" : f"{deleted_users} users have been deleted"}
     except Exception as e:
         db.session.rollback()
         return {'error': str(e)}
