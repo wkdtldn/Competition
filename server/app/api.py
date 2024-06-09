@@ -78,6 +78,19 @@ def all_users():
         )
     
     return users
+
+def delete_all_users():
+    try:
+        deleted_users = db.session.query(User).delete()
+        db.session.commit()
+
+        db.session.execute('ALTER TABLE users AUTO_INCREMENT = 1')
+        db.session.commit()
+
+        return {"message" : f"Delete ALl Users({deleted_users})"}
+    except Exception as e:
+        db.session.rollback()
+        return {'error': str(e)}, 500
     
 # Trash --------------------------
 def get_trash():
