@@ -1,8 +1,10 @@
+import sys
+print(sys.path)
+
+
+
 from flask import Flask, request, Response
 from db import db
-import sys
-
-print(sys.path)
 
 app = Flask(__name__)
 

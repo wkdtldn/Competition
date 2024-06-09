@@ -1,10 +1,12 @@
+import sys
+print(sys.path)
+
+
+
 from sqlalchemy import ForeignKey, Integer, Column, Text, String, Float
 from sqlalchemy.orm import relationship
 from db import db
 from sqlalchemy.ext.declarative import declarative_base
-import sys
-
-print(sys.path)
 
 class User(db.Model):
     __tablename__ = "users"
