@@ -13,7 +13,8 @@ def get_users():
              "email" : user.email,
              "password" : user.password,
              "image" : user.image,
-             "point" : user.point})
+             "point" : user.point}
+        )
 
     return user_list
 
@@ -50,7 +51,8 @@ def get_rank():
             "email" : user.email,
             "password" : user.password,
             "image" : user.image,
-            "point" : user.point})
+            "point" : user.point}
+        )
 
     return ranked_users
     
@@ -59,6 +61,23 @@ def create_point(user_id, lat, lnt, image, date, time):
     db.session.add(point)
     db.session.commit()
     return True
+
+def all_users():
+    users_query = User.query.all()
+
+    users = []
+
+    for user in users:
+        users.append(
+            {"id" : user.id,
+            "nickname" : user.nickname,
+            "email" : user.email,
+            "password" : user.password,
+            "image" : user.image,
+            "point" : user.point}
+        )
+    
+    return users
     
 # Trash --------------------------
 def get_trash():
@@ -72,7 +91,8 @@ def get_trash():
              "name" : trash.name,
              "description" : trash.description,
              "disposal_method" : trash.disposal_method,
-             "image" : trash.image})
+             "image" : trash.image}
+        )
     
     return trash_list
 
@@ -88,7 +108,8 @@ def __search__(keyword):
                 "name" : trash.name,
                 "description" : trash.description,
                 "disposal_method" : trash.disposal_method,
-                "image" : trash.image})
+                "image" : trash.image}
+            )
             
     return result
 
