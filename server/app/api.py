@@ -1,5 +1,5 @@
-from .models import User, Trash, Point
-from .config import Config
+from models import *
+from config import *
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, Response
 
@@ -8,7 +8,6 @@ app.config.from_object(Config)
 app.secret_key = 'my_own_secret_key'
 
 db = SQLAlchemy(app)
-
 
 def __init__():
 
