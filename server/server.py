@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, Response, current_app, g
 from functools import wraps
 import flask
 import json
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, create_refresh_token, jwt_refresh_token_required
 from datetime import datetime, timedelta
 from flask_cors import CORS
 from app import create_app
@@ -44,6 +44,13 @@ def login_required(f):
 
     return decorated_function
 
+@app.route('/refresh', method=['POST'])
+@jwt_refresh_token_required
+def refresh():
+    current_user = get_jwt_identity()
+    new_access_token = create_access_token(identity=current_user)
+    return jsonify(access_token=new_access_token), 200
+
 ## ------------------------------------------------------------------------------------------------
 
 
@@ -80,7 +87,8 @@ def login():
 
     if api.login(email, password):
         access_token = create_access_token(identity=email)
-        return jsonify({'access_token': access_token}), 200
+        refresh_token = create_refresh_token(identity=email)
+        return jsonify({'access_token': access_token, 'refresh_token' : refresh_token}), 200
     else:
         return jsonify({"message" : "Login Fail"})
 
@@ -115,7 +123,7 @@ def create_point():
 
 # Others ---
 @app.route('/protected', methods=['GET'])
-@jwt_required()
+@login_required()
 def protected():
     current_user = get_jwt_identity()
     return jsonify(logged_in_as=current_user), 200
