@@ -1,4 +1,5 @@
 from models import *
+from sqlalchemy import text
 
 # User --------------------------
 def get_users():
@@ -84,7 +85,7 @@ def delete_all_users():
         deleted_users = db.session.query(User).delete()
         db.session.commit()
 
-        db.session.execute('ALTER TABLE users AUTO_INCREMENT = 1')
+        db.session.execute(text('ALTER TABLE users AUTO_INCREMENT = 1'))
         db.session.commit()
 
         return {"message" : f"Delete ALl Users({deleted_users})"}
