@@ -1,14 +1,7 @@
-# from model import *
-from .model import *
-from config import *
-from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, Response
+from db import db
 
 app = Flask(__name__)
-app.config.from_object(Config)
-app.secret_key = 'my_own_secret_key'
-
-db = SQLAlchemy(app)
 
 def __init__():
 
