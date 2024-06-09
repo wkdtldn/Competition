@@ -68,7 +68,7 @@ def all_users():
 
     users = []
 
-    for user in users:
+    for user in users_query:
         users.append(
             {"id" : user.id,
             "nickname" : user.nickname,
