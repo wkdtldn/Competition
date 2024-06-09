@@ -1,4 +1,4 @@
-from Model import *
+from .Model import *
 from config import *
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, Response
