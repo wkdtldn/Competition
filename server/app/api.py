@@ -1,5 +1,5 @@
 # from model import *
-from model import User
+from .model import *
 from config import *
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, Response
