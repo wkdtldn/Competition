@@ -1,11 +1,6 @@
-import sys
-print(sys.path)
-
-
-
 from sqlalchemy import ForeignKey, Integer, Column, Text, String, Float
 from sqlalchemy.orm import relationship
-from db import db
+from .config import db
 from sqlalchemy.ext.declarative import declarative_base
 
 class User(db.Model):

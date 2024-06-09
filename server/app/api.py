@@ -1,10 +1,6 @@
-import sys
-print(sys.path)
-
-
-
 from flask import Flask, request, Response
-from db import db
+from .config import db
+from .model import *
 
 app = Flask(__name__)
 
