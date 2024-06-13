@@ -17,39 +17,39 @@ CORS(app)
 ## ------------------------------------------------------------------------------------------------
 
 # token을 decode하여 반환함, decode에 실패하는 경우 payload = None으로 반환
-def check_access_token(access_token):
-    try:
-        payload = jwt.decode(access_token, current_app.config['JWT_SECRET_KEY'], "HS256")
-        if payload['exp'] < datetime.utcnow():  # 토큰이 만료된 경우
-            payload = None
-    except jwt.InvalidTokenError:
-        payload = None
+# def check_access_token(access_token):
+#     try:
+#         payload = jwt.decode(access_token, current_app.config['JWT_SECRET_KEY'], "HS256")
+#         if payload['exp'] < datetime.utcnow():  # 토큰이 만료된 경우
+#             payload = None
+#     except jwt.InvalidTokenError:
+#         payload = None
     
-    return payload
+#     return payload
 
 
-# decorator 함수
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwagrs):
-        access_token = request.headers.get('Authorization') # 요청의 토큰 정보를 받아옴
-        if access_token is not None: # 토큰이 있는 경우
-            payload = check_access_token(access_token) # 토큰 유효성 확인
-            if payload is None: # 토큰 decode 실패 시 401 반환
-                return Response(status=401)
-        else: # 토큰이 없는 경우 401 반환
-            return Response(status=401)
+# # decorator 함수
+# def login_required(f):
+#     @wraps(f)
+#     def decorated_function(*args, **kwagrs):
+#         access_token = request.headers.get('Authorization') # 요청의 토큰 정보를 받아옴
+#         if access_token is not None: # 토큰이 있는 경우
+#             payload = check_access_token(access_token) # 토큰 유효성 확인
+#             if payload is None: # 토큰 decode 실패 시 401 반환
+#                 return Response(status=401)
+#         else: # 토큰이 없는 경우 401 반환
+#             return Response(status=401)
 
-        return f(*args, **kwagrs)
+#         return f(*args, **kwagrs)
 
-    return decorated_function
+#     return decorated_function
 
-@app.route('/refresh', method=['POST'])
-@jwt_required(refresh=True)
-def refresh():
-    current_user = get_jwt_identity()
-    new_access_token = create_access_token(identity=current_user)
-    return jsonify(access_token=new_access_token), 200
+# @app.route('/refresh', method=['POST'])
+# @jwt_required(refresh=True)
+# def refresh():
+#     current_user = get_jwt_identity()
+#     new_access_token = create_access_token(identity=current_user)
+#     return jsonify(access_token=new_access_token), 200
 
 ## ------------------------------------------------------------------------------------------------
 
@@ -126,7 +126,7 @@ def create_point():
 
 # Jwt ---
 @app.route('/protected', methods=['GET'])
-@login_required()
+@jwt_required()
 def protected():
     current_user = get_jwt_identity()
     return jsonify(logged_in_as=current_user), 200
