@@ -76,7 +76,7 @@ def create_point():
     print(lat)
     lng = data["lng"]
     print(lng)
-    image = date["image"]
+    image = data["image"]
 
     now = datetime.now()
     date = now.strftime("%Y년 %m월 %d일")
