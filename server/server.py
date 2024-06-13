@@ -124,7 +124,7 @@ def create_point():
     api.create_point(user_id, lat, lnt, image, date, time)
     return jsonify({"message" : "You got a point!"})
 
-# Others ---
+# Jwt ---
 @app.route('/protected', methods=['GET'])
 @login_required()
 def protected():
@@ -133,4 +133,4 @@ def protected():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    app.run(host='0.0.0.0', port=42836, debug=True)
