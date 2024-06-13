@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, Response, current_app, g
+from pytz import timezone
 from functools import wraps
 import flask
 import json
@@ -78,7 +79,7 @@ def create_point():
     print(lng)
     image = data["image"]
 
-    now = datetime.now()
+    now = datetime.now(timezone('Asia/Seoul'))
     date = now.strftime("%Y년 %m월 %d일")
     time = now.strftime("%H:%M")
 
