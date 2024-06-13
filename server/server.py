@@ -82,7 +82,7 @@ def create_point():
     date = now.strftime("%Y년 %m월 %d일")
     time = now.strftime("%H:%M")
 
-    api.create_point(user_id, lat, lnt, image, date, time)
+    api.create_point(user_id, lat, lng, image, date, time)
     return jsonify({"msg" : "You got a point!"})
 
 # Jwt ---
