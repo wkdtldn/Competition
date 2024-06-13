@@ -24,12 +24,12 @@ def sign_up(nickname, email, password):
 
     for user in users:
         if nickname == user.nickname:
-            return {"message" : "Try another one"}
+            return {"msg" : "Try another one"}
             
     new_user = User(nickname=nickname, email=email, password=password)
     db.session.add(new_user)
     db.session.commit()
-    return {"message" : "Sign up Success"}
+    return {"msg" : "Sign up Success"}
     
 def login(email, password):
     user = User.query.filter_by(email=email).all()
@@ -37,8 +37,7 @@ def login(email, password):
     if user:
         if password == user[0].password:
             return True
-        else:
-            return False
+    return False
         
 def get_rank():
     ranked_users = User.query.order_by(asc(User.point)).all()
@@ -88,7 +87,7 @@ def delete_all_users():
         db.session.execute(text('ALTER TABLE users AUTO_INCREMENT = 1'))
         db.session.commit()
 
-        return {"message" : f"{deleted_users} users have been deleted"}
+        return {"msg" : f"{deleted_users} users have been deleted"}
     except Exception as e:
         db.session.rollback()
         return {'error': str(e)}

@@ -14,45 +14,6 @@ app.config['JWT_SECRET_KEY'] = 'just_my_own_secret_key'
 jwt = JWTManager(app)
 CORS(app)
 
-## ------------------------------------------------------------------------------------------------
-
-# token을 decode하여 반환함, decode에 실패하는 경우 payload = None으로 반환
-# def check_access_token(access_token):
-#     try:
-#         payload = jwt.decode(access_token, current_app.config['JWT_SECRET_KEY'], "HS256")
-#         if payload['exp'] < datetime.utcnow():  # 토큰이 만료된 경우
-#             payload = None
-#     except jwt.InvalidTokenError:
-#         payload = None
-    
-#     return payload
-
-
-# # decorator 함수
-# def login_required(f):
-#     @wraps(f)
-#     def decorated_function(*args, **kwagrs):
-#         access_token = request.headers.get('Authorization') # 요청의 토큰 정보를 받아옴
-#         if access_token is not None: # 토큰이 있는 경우
-#             payload = check_access_token(access_token) # 토큰 유효성 확인
-#             if payload is None: # 토큰 decode 실패 시 401 반환
-#                 return Response(status=401)
-#         else: # 토큰이 없는 경우 401 반환
-#             return Response(status=401)
-
-#         return f(*args, **kwagrs)
-
-#     return decorated_function
-
-# @app.route('/refresh', method=['POST'])
-# @jwt_required(refresh=True)
-# def refresh():
-#     current_user = get_jwt_identity()
-#     new_access_token = create_access_token(identity=current_user)
-#     return jsonify(access_token=new_access_token), 200
-
-## ------------------------------------------------------------------------------------------------
-
 
 # Trash --------------------------
 @app.route('/trash/data', methods=['GET'])
@@ -90,7 +51,7 @@ def login():
         refresh_token = create_refresh_token(identity=email)
         return jsonify({'access_token': access_token, 'refresh_token' : refresh_token}), 200
     else:
-        return jsonify({"message" : "Login Fail"})
+        return jsonify({"msg": "Bad username or password"}), 401
 
 @app.route('/rank', methods=['GET'])
 # @login_required
@@ -113,8 +74,8 @@ def create_point():
     print(user_id)
     lat = data["lat"]
     print(lat)
-    lnt = data["lnt"]
-    print(lnt)
+    lng = data["lng"]
+    print(lng)
     image = date["image"]
 
     now = datetime.now()
@@ -122,7 +83,7 @@ def create_point():
     time = now.strftime("%H:%M")
 
     api.create_point(user_id, lat, lnt, image, date, time)
-    return jsonify({"message" : "You got a point!"})
+    return jsonify({"msg" : "You got a point!"})
 
 # Jwt ---
 @app.route('/protected', methods=['GET'])
@@ -130,6 +91,13 @@ def create_point():
 def protected():
     current_user = get_jwt_identity()
     return jsonify(logged_in_as=current_user), 200
+
+@app.route('/refresh', methods=['POST'])
+@jwt_required(refresh=True)
+def refresh():
+    current_user = get_jwt_identity()
+    new_access_token = create_access_token(identity=current_user)
+    return jsonify(access_token=new_access_token)
 
 
 if __name__ == "__main__":
