@@ -32,7 +32,7 @@ class Point(db.Model):
 
     id = db.Column(db.Integer, nullable=False, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    lnt = db.Column(db.Float, nullable=False)
+    lng = db.Column(db.Float, nullable=False)
     lat = db.Column(db.Float, nullable=False)
     image = db.Column(db.Text, nullable=False)
     date = db.Column(db.Text, nullable=False)
