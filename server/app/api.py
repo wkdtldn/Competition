@@ -71,7 +71,7 @@ def delete_all_point():
         db.session.execute(text('ALTER TABLE point AUTO_INCREMENT = 1'))
         db.session.commit()
 
-        return {"msg" : f"{deleted_point} users have been deleted"}
+        return {"msg" : f"{deleted_point} point have been deleted"}
     except Exception as e:
         db.session.rollback()
         return {'error': str(e)}
