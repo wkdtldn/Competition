@@ -44,17 +44,18 @@ def get_rank():
     
     rank_list = []
 
-    for user in ranked_users:
-        rank_list.append(
-            {"id" : user.id,
-            "nickname" : user.nickname,
-            "email" : user.email,
-            "password" : user.password,
-            "image" : user.image,
-            "point" : user.point}
-        )
-
-    return rank_list
+    if ranked_users:
+        for user in ranked_users:
+            rank_list.append(
+                {"id" : user.id,
+                "nickname" : user.nickname,
+                "email" : user.email,
+                "password" : user.password,
+                "image" : user.image,
+                "point" : user.point}
+            )
+        return rank_list
+    return False
     
 def create_point(user_id, lat, lng, image, date, time):
     point = Point(user_id=user_id, lat=lat, lng=lng, image=image, date=date, time=time)

@@ -55,7 +55,9 @@ def login():
 
 @app.route('/rank', methods=['GET'])
 def get_ranks():
-    return json.dumps(api.get_rank(), ensure_ascii=False)
+    if api.get_rank():
+        return json.dumps(api.get_rank(), ensure_ascii=False)
+    return jsonify({"msg" : "No user"})
 
 # @app.route('/admin/show_users', methods=['GET'])
 # def get_all_users():
