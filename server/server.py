@@ -15,16 +15,6 @@ app.config['JWT_SECRET_KEY'] = 'just_my_own_secret_key'
 jwt = JWTManager(app)
 CORS(app)
 
-seoul_tz = timezone('Asia/Seoul')
-
-@app.before_request
-def set_timezone():
-    if 'user_timezone' in session:
-        session['user_timezone'] = request.args.get('timezone')
-    else:
-        session['user_timezone'] = 'Asia/Seoul'
-
-
 # Trash --------------------------
 @app.route('/trash/data', methods=['GET'])
 def trash_all():
