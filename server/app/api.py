@@ -86,20 +86,24 @@ def get_point():
     for point in points:
         today_point_list.append(
             {"id" : point.id,
+            "user_id" : point.user_id,
             "lat" : point.lat,
             "lng" : point.lng,
             "image" : point.image,
+            "date" : point.date,
             "time" : point.time})
 
     return today_point_list
 
 def find_mark_point(ID):
-    point = Point.query.filter_by(id=ID).all()
+    point = Point.query.filter_by(id=ID)
 
     return {"id" : point.id,
+            "user_id" : point.user_id,
             "lat" : point.lat,
             "lng" : point.lng,
             "image" : point.image,
+            "date" : point.date,
             "time" : point.time}
 
 
