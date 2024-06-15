@@ -78,9 +78,8 @@ def delete_all_point():
 
 def get_point():
     now = datetime.now()
-
-    today = datetime(now.year, now.month, now.day)
-    points = Point.query.filter_by(time=today)
+    today = now.strftime("%Y-%m-%d")
+    points = Point.query.filter_by(date=today).all()
 
     today_point_list = []
 
