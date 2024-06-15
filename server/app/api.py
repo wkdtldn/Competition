@@ -98,8 +98,6 @@ def get_point():
 def find_mark_point(ID):
     point = Point.query.get(ID)
 
-    print(point)
-
     return {"id" : point.id,
             "user_id" : point.user_id,
             "lat" : point.lat,

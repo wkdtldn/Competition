@@ -16,7 +16,7 @@ app = Flask(__name__)
 app = create_app()
 app.config['JWT_SECRET_KEY'] = 'just_my_own_secret_key'
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=1)
-app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(minutes=30)
+app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=1)
 jwt = JWTManager(app)
 CORS(app)
 
@@ -105,7 +105,6 @@ def get_today_point():
 @jwt_required()
 def protected():
     current_user = get_jwt_identity()
-    print("\n" + current_user + "\n")
     return jsonify(logged_in_as=current_user), 200
 
 @app.route('/refresh', methods=['POST'])
