@@ -92,6 +92,10 @@ def create_point():
     api.create_point(user_id, lat, lng, image, date, time)
     return jsonify({"msg" : "You got a point!"})
 
+@app.route('/point/<int:ID>', methods=['GET'])
+def find_point_mark(ID):
+    return json.dumps(api.find_mark_point(ID=ID), ensure_ascii=False)
+
 @app.route('/today_point', methods=['GET'])
 def get_today_point():
     return json.dumps(api.get_point(), ensure_ascii=False)
