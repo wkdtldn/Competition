@@ -57,8 +57,8 @@ def get_rank():
         return rank_list
     return False
     
-def create_point(user_id, lat, lng, image, date, time):
-    point = Point(user_id=user_id, lat=lat, lng=lng, image=image, date=date, time=time)
+def create_point(user_id, lat, lng, image):
+    point = Point(user_id=user_id, lat=lat, lng=lng, image=image)
     db.session.add(point)
     db.session.commit()
     return True
