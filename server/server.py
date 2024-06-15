@@ -37,6 +37,7 @@ def register():
     nickname = data['nickname']
     password = data['password']
     email = data['email']
+    print(nickname, password, email)
 
     return api.sign_up(nickname=nickname, password=password, email=email)
 
