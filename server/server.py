@@ -12,7 +12,7 @@ from app import api
 app = Flask(__name__)
 app = create_app()
 app.config['JWT_SECRET_KEY'] = 'just_my_own_secret_key'
-app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=30)
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=1)
 jwt = JWTManager(app)
 CORS(app)
 
@@ -96,4 +96,4 @@ def refresh():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080, ssl_context=('cert.pem', 'key.pem'), debug=True)
