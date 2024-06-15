@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, Response, current_app, g
 import ssl
 import os
+import sys
 from pytz import timezone
 from functools import wraps
 import flask
@@ -19,7 +20,8 @@ app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(minutes=30)
 jwt = JWTManager(app)
 CORS(app)
 
-print(os.chdir())
+print(os.path)
+print(sys.path)
 
 # Trash --------------------------
 @app.route('/trash/data', methods=['GET'])
