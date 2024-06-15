@@ -33,7 +33,7 @@ def trash_one(ID):
 def trash_search():
     data = request.get_json()
     word = data['word']
-    return api.__search__(keyword=word)
+    return api.__search__(keyword=word)[0]
 
 # User --------------------------
 @app.route("/sign_up", methods=['POST'])
