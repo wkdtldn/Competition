@@ -72,7 +72,7 @@ def get_ranks():
 def __delete__():
     return json.dumps(api.delete_all_users(), ensure_ascii=False)
 
-@app.route('/admin/delete_all_points', method=['GET'])
+@app.route('/admin/delete_all_points', methods=['GET'])
 def point_delete():
     return json.dumps(api.delete_all_point(), ensure_ascii=False)
 
