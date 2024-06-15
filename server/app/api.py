@@ -131,8 +131,8 @@ def find_trash(ID):
     trash = Trash.query.filter_by(id=ID).all()
 
 
-    return [{"id" : trash[0].id,
+    return {"id" : trash[0].id,
              "name" : trash[0].name,
              "description" : trash[0].description,
              "disposal_method" : trash[0].disposal_method,
-             "image" : trash[0].image}]
+             "image" : trash[0].image}
