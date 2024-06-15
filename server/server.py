@@ -37,7 +37,6 @@ def register():
     nickname = data['nickname']
     password = data['password']
     email = data['email']
-    print(nickname, password, email)
 
     return api.sign_up(nickname=nickname, password=password, email=email)
 
@@ -84,6 +83,7 @@ def create_point():
 @jwt_required()
 def protected():
     current_user = get_jwt_identity()
+    print("\n" + current_user + "\n")
     return jsonify(logged_in_as=current_user), 200
 
 @app.route('/refresh', methods=['POST'])
