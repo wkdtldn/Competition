@@ -20,7 +20,7 @@ app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(minutes=30)
 jwt = JWTManager(app)
 CORS(app)
 
-print(os.path)
+print(os.path.isfile('key.pem'))
 print(sys.path)
 
 # Trash --------------------------
@@ -104,9 +104,7 @@ def refresh():
 
 
 if __name__ == "__main__":
-    app.debug = True
+    ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    ssl_context.load_cert_chain(certfile='cert.pem', keyfile='key.pem', password='happyjo486!')
 
-    ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS)
-    ssl_context.load_cert_chain(certfile='/cert.pem', keyfile='/key.pem', password='happyjo486!')
-
-    app.run(host='0.0.0.0', port=443, ssl_context=ssl_context)
+    app.run(host='0.0.0.0', port=443, ssl_context=ssl_context, debug=True)
