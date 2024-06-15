@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+import pytz
 
 db = SQLAlchemy()
 
@@ -35,7 +37,12 @@ class Point(db.Model):
     lng = db.Column(db.Float, nullable=False)
     lat = db.Column(db.Float, nullable=False)
     image = db.Column(db.Text, nullable=False)
-    date = db.Column(db.Text, nullable=False)
-    time = db.Column(db.Text, nullable=False)
+    time = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     user = db.relationship("User")
+
+    @staticmethod
+    def current_time():
+        return datetime.now(pytz.timezone('Asia/Seoul'))
+
+seoul_time = Point.current_time()

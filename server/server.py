@@ -15,6 +15,15 @@ app.config['JWT_SECRET_KEY'] = 'just_my_own_secret_key'
 jwt = JWTManager(app)
 CORS(app)
 
+seoul_tz = timezone('Asia/Seoul')
+
+@app.before_request
+def set_timezone():
+    if 'user_timezone' in session:
+        session['user_timezone'] = request.args.get('timezone')
+    else:
+        session['user_timezone'] = 'Asia/Seoul'
+
 
 # Trash --------------------------
 @app.route('/trash/data', methods=['GET'])
@@ -55,7 +64,6 @@ def login():
         return jsonify({"msg": "Bad username or password"}), 401
 
 @app.route('/rank', methods=['GET'])
-# @login_required
 def get_ranks():
     return json.dumps(api.get_rank(), ensure_ascii=False)
 
@@ -68,22 +76,14 @@ def get_ranks():
 #     return json.dumps(api.delete_all_users(), ensure_ascii=False)
 
 @app.route("/point", methods=['POST'])
-# @login_required
 def create_point():
     data = request.get_json()
     user_id = data["user_id"]
-    print(user_id)
     lat = data["lat"]
-    print(lat)
     lng = data["lng"]
-    print(lng)
     image = data["image"]
 
-    now = datetime.now(timezone('Asia/Seoul'))
-    date = now.strftime("%Y년 %m월 %d일")
-    time = now.strftime("%H:%M")
-
-    api.create_point(user_id, lat, lng, image, date, time)
+    api.create_point(user_id, lat, lng, image)
     return jsonify({"msg" : "You got a point!"})
 
 # Jwt ---
