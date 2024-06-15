@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, Response, current_app, g
+import ssl
 from pytz import timezone
 from functools import wraps
 import flask
@@ -95,5 +96,11 @@ def refresh():
     return jsonify(access_token=new_access_token)
 
 
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.debug = True
+
+    ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS)
+    ssl_context.load_cert_chain(certfile='cert.pem', keyfile='key.pem', password='happyjo')
+
+    app.run(host='0.0.0.0', port=443, ssl_context=ssl_context)
