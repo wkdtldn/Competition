@@ -63,6 +63,23 @@ def create_point(user_id, lat, lng, image):
     db.session.commit()
     return True
 
+def get_point():
+
+    today = datetime.now()
+    points = Point.query.filter_by(time=today)
+
+    today_point_list = []
+
+    for point in points:
+        today_point_list.append({"id" : point.id,
+            "lat" : point.lat,
+            "lng" : point.lng,
+            "image" : point.image,
+            "time" : point.time})
+
+    return today_point_list[0]
+
+
 def all_users():
     users_query = User.query.all()
 

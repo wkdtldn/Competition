@@ -83,6 +83,10 @@ def create_point():
     api.create_point(user_id, lat, lng, image)
     return jsonify({"msg" : "You got a point!"})
 
+@app.route('/today_point', methods=['GET'])
+def get_today_point():
+    return json.dumps(api.get_point(), ensure_ascii=False)
+
 # Jwt ---
 @app.route('/protected', methods=['GET'])
 @jwt_required()
