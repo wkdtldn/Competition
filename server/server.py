@@ -20,9 +20,6 @@ app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(minutes=30)
 jwt = JWTManager(app)
 CORS(app)
 
-print(os.path.isfile('key.pem'))
-print(sys.path)
-
 # Trash --------------------------
 @app.route('/trash/data', methods=['GET'])
 def trash_all():

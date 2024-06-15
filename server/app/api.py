@@ -125,7 +125,7 @@ def __search__(keyword):
                 "image" : trash.image}
             )
             
-    return result
+    return result[0]
 
 def find_trash(ID):
     trash = Trash.query.filter_by(id=ID).all()
