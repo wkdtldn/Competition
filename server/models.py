@@ -37,12 +37,13 @@ class Point(db.Model):
     lng = db.Column(db.Float, nullable=False)
     lat = db.Column(db.Float, nullable=False)
     image = db.Column(db.Text, nullable=False)
-    time = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    date = db.Column(db.Text, nullable=False)
+    time = db.Column(db.Text, nullable=False)
 
     user = db.relationship("User")
 
-    @staticmethod
-    def current_time():
-        return datetime.now(pytz.timezone('Asia/Seoul'))
+#     @staticmethod
+#     def current_time():
+#         return datetime.now(pytz.timezone('Asia/Seoul'))
 
-seoul_time = Point.current_time()
+# seoul_time = Point.current_time()

@@ -57,15 +57,29 @@ def get_rank():
         return rank_list
     return False
     
-def create_point(user_id, lat, lng, image):
-    point = Point(user_id=user_id, lat=lat, lng=lng, image=image)
+def create_point(user_id, lat, lng, image, date, time):
+    point = Point(user_id=user_id, lat=lat, lng=lng, image=image, date=date, time=time)
     db.session.add(point)
     db.session.commit()
     return True
 
-def get_point():
+def delete_all_point():
+    try:
+        deleted_point = db.session.query(Point).delete()
+        db.session.commit()
 
-    today = datetime.now()
+        db.session.execute(text('ALTER TABLE point AUTO_INCREMENT = 1'))
+        db.session.commit()
+
+        return {"msg" : f"{deleted_point} users have been deleted"}
+    except Exception as e:
+        db.session.rollback()
+        return {'error': str(e)}
+
+def get_point():
+    now = datetime.now()
+
+    today = datetime(now.year, now.month, now.day)
     points = Point.query.filter_by(time=today)
 
     today_point_list = []
@@ -77,7 +91,7 @@ def get_point():
             "image" : point.image,
             "time" : point.time})
 
-    return today_point_list[0]
+    return today_point_list
 
 
 def all_users():
@@ -146,7 +160,6 @@ def __search__(keyword):
 
 def find_trash(ID):
     trash = Trash.query.filter_by(id=ID).all()
-
 
     return {"id" : trash[0].id,
              "name" : trash[0].name,

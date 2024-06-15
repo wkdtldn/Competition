@@ -80,7 +80,12 @@ def create_point():
     lng = data["lng"]
     image = data["image"]
 
-    api.create_point(user_id, lat, lng, image)
+    now = datetime.now()
+
+    date = now.strftime("%Y-%m-%d")
+    time = now.strftime('%H:%M:%S')
+
+    api.create_point(user_id, lat, lng, image, date, time)
     return jsonify({"msg" : "You got a point!"})
 
 @app.route('/today_point', methods=['GET'])
