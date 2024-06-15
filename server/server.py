@@ -102,6 +102,6 @@ if __name__ == "__main__":
     app.debug = True
 
     ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS)
-    ssl_context.load_cert_chain(certfile='cert.pem', keyfile='key.pem', password='happyjo486!')
+    ssl_context.load_cert_chain(certfile='/cert.pem', keyfile='/key.pem', password='happyjo486!')
 
     app.run(host='0.0.0.0', port=443, ssl_context=ssl_context)
