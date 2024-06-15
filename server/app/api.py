@@ -96,9 +96,9 @@ def get_point():
     return today_point_list
 
 def find_mark_point(ID):
-    point = Point.query.get(id=ID)
+    point = Point.query.get(ID)
 
-    print(point, point.id)
+    print(point)
 
     return {"id" : point.id,
             "user_id" : point.user_id,
