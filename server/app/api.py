@@ -40,7 +40,7 @@ def login(email, password):
     return False
         
 def get_rank():
-    ranked_users = User.query.order_by(asc(User.point)).all()
+    ranked_users = User.query.order_by(desc(User.point)).all()
     
     rank_list = []
 
