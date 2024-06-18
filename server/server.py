@@ -72,8 +72,6 @@ def get_user_by_id(Keyword):
         return api.user_info({'Keyword' : current_user})
     return api.user_info(Keyword)
 
-@app.route()
-
 # Admin --------------------------
 @app.route('/admin/delete_all_users', methods=['GET'])
 def __delete__():
