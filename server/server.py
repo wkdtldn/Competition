@@ -67,13 +67,12 @@ def get_ranks():
         return json.dumps(api.get_rank(), ensure_ascii=False)
     return jsonify({"msg" : "No user"})
 
-@app.route('/user/<any(int, str):Keyword>', methods=['GET'])
+@app.route('/user/by_token/<Keyword>', methods=['GET'])
 @jwt_required()
-def get_user(Keyword):
-    print(Keyword)
-    if type(Keyword) == str:
-        current_user = get_jwt_identity()
-        return json.dumps(api.user_info(key=current_user), ensure_ascii=False)
+def get_user_by_token(Keyword=None):
+    current_user = get_jwt_identity()
+    return json.dumps(api.user_info(key=current_user), ensure_ascii=False)
+
 @app.route('/user/by_id/<int:ID>', methods=['GET'])
 @jwt_required()
 def get_user_by_id(ID):
