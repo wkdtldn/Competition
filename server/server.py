@@ -66,11 +66,16 @@ def get_ranks():
 
 @app.route('/user/<any(int, str):Keyword>', methods=['GET'])
 @jwt_required()
-def get_user_by_id(Keyword):
-    if type(Keyword) == dict:
+def get_user(Keyword):
+    if type(Keyword) == str:
         current_user = get_jwt_identity()
         return api.user_info({'Keyword' : current_user})
     return api.user_info(Keyword)
+
+@app.route('/user/by_id/<int:ID>', methods=['GET'])
+@jwt_required()
+def get_user_by_id(ID):
+    return json.dumps(api.user_info(ID), ensure_ascii=False)
 
 # Admin --------------------------
 @app.route('/admin/delete_all_users', methods=['GET'])

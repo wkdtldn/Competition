@@ -28,7 +28,7 @@ def login(email, password):
     user = User.query.filter_by(email=email)
     
     if user:
-        if password == user.password:
+        if password == user[0].password:
             return True
     return False
         
