@@ -123,7 +123,7 @@ def __search__(keyword):
 
     for trash in wastes:
         if keyword in trash.name:
-            result.append(point_dict(trash))
+            result.append(trash_dict(trash))
             
     return result
 
