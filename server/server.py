@@ -11,6 +11,7 @@ from datetime import datetime, timedelta
 from flask_cors import CORS
 from app import create_app
 from app import api
+from Any_type import AnyConverter
 
 app = Flask(__name__)
 app = create_app()
@@ -19,6 +20,8 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=1)
 app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=1)
 jwt = JWTManager(app)
 CORS(app)
+
+app.url_map.converters['any'] = AnyConverter
 
 # Trash --------------------------
 @app.route('/trash/data', methods=['GET'])
@@ -67,9 +70,9 @@ def get_ranks():
 @app.route('/user/<any(int, str):Keyword>', methods=['GET'])
 @jwt_required()
 def get_user(Keyword):
-    return type(Keyword)
-    current_user = get_jwt_identity()
-    return json.dumps(api.user_info(key=current_user), ensure_ascii=False)
+    if type(Keyword) == str:
+        current_user = get_jwt_identity()
+        return json.dumps(api.user_info(key=current_user), ensure_ascii=False)
 
 @app.route('/user/by_id/<int:ID>', methods=['GET'])
 @jwt_required()
