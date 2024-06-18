@@ -70,10 +70,10 @@ def get_ranks():
 @app.route('/user/<any(int, str):Keyword>', methods=['GET'])
 @jwt_required()
 def get_user(Keyword):
+    print(Keyword)
     if type(Keyword) == str:
         current_user = get_jwt_identity()
         return json.dumps(api.user_info(key=current_user), ensure_ascii=False)
-
 @app.route('/user/by_id/<int:ID>', methods=['GET'])
 @jwt_required()
 def get_user_by_id(ID):
