@@ -61,8 +61,9 @@ def user_info(*args, **kwargs):
         user_args = User.query.get(arg)
         return user_dict(user_args)
     for key, value in kwargs.items():
-        user_kwargs = User.query.filter_by(email=value)
-        return user_dict(user_kwargs)
+        print(value)
+        # user_kwargs = User.query.filter_by(email=value)
+        # return user_dict(user_kwargs)
     
     
     
