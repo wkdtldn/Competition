@@ -68,6 +68,7 @@ def get_ranks():
 @jwt_required()
 def get_user(Keyword):
     if type(Keyword) == str:
+        print(Keyword)
         current_user = get_jwt_identity()
         return api.user_info(key=current_user)
     return api.user_info(Keyword)
