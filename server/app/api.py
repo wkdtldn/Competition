@@ -60,6 +60,7 @@ def user_info(*args, **kwargs):
     for arg in args:
         user_args = User.query.get(arg)
     for key, value in kwargs.items():
+        print(key, value)
         user_kwargs = User.query.filter_by(email=value)
     
     if user_args:
