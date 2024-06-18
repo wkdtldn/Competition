@@ -64,10 +64,17 @@ def get_ranks():
         return json.dumps(api.get_rank(), ensure_ascii=False)
     return jsonify({"msg" : "No user"})
 
-# @app.route('/admin/show_users', methods=['GET'])
-# def get_all_users():
-#     return json.dumps(api.get_users(), ensure_ascii=False)
+@app.route('/user/<any(int, str):Keyword>', methods=['GET'])
+@jwt_required()
+def get_user_by_id(Keyword):
+    if type(Keyword) == dict:
+        current_user = get_jwt_identity()
+        return api.user_info({'Keyword' : current_user})
+    return api.user_info(Keyword)
 
+@app.route()
+
+# Admin --------------------------
 @app.route('/admin/delete_all_users', methods=['GET'])
 def __delete__():
     return json.dumps(api.delete_all_users(), ensure_ascii=False)
@@ -76,6 +83,7 @@ def __delete__():
 def point_delete():
     return json.dumps(api.delete_all_point(), ensure_ascii=False)
 
+# Point --------------------------
 @app.route("/point", methods=['POST'])
 def create_point():
     data = request.get_json()
@@ -100,7 +108,7 @@ def find_point_mark(ID):
 def get_today_point():
     return json.dumps(api.get_point(), ensure_ascii=False)
 
-# Jwt ---
+# Jwt --------------------------
 @app.route('/protected', methods=['GET'])
 @jwt_required()
 def protected():
