@@ -59,14 +59,13 @@ def delete_all_users():
 def user_info(*args, **kwargs):
     for arg in args:
         user_args = User.query.get(arg)
-    for key, value in kwargs.items():
-        print(key, value)
-        user_kwargs = User.query.filter_by(email=value)
-    
-    if user_args:
         return user_dict(user_args)
-    if user_kwargs:
+    for key, value in kwargs.items():
+        user_kwargs = User.query.filter_by(email=value)
         return user_dict(user_kwargs)
+    
+    
+    
 
 # Point --------------------------
 def create_point(user_id, lat, lng, image, date, time):
