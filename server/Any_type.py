@@ -6,10 +6,12 @@ class AnyConverter(BaseConverter):
         self.items = items
 
     def to_python(self, value):
-        if value in self.items:
-            return value
-        else:
-            raise ValueError()
+        for item in self.items:
+            try:
+                return item(value)
+            except ValueError:
+                continue
+        raise ValueError(f"Value '{value}' does not match any allowed types {self.items}")
 
     def to_url(self, value):
-        return value
+        return str(value)
