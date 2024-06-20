@@ -113,6 +113,8 @@ def get_all_point():
     for point in points:
         point_list.append(point_dict(point))
     
+    return point_list
+    
 # Trash --------------------------
 def get_trash():
     wastes = Trash.query.all()
