@@ -63,9 +63,6 @@ def user_info(*args, **kwargs):
     for key, value in kwargs.items():
         user_kwargs = User.query.filter_by(email=value)
         return user_dict(user_kwargs[0])
-    
-    
-    
 
 # Point --------------------------
 def create_point(user_id, lat, lng, image, date, time):
