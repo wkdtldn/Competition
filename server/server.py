@@ -95,7 +95,7 @@ def create_point():
     lng = data["lng"]
     image = data["image"]
 
-    now = datetime.now()
+    now = datetime.now(timezone('Asia/Seoul'))
 
     date = now.strftime("%Y-%m-%d")
     time = now.strftime('%H:%M:%S')
