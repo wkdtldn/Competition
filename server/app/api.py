@@ -104,6 +104,14 @@ def find_mark_point(ID):
     point = Point.query.get(ID)
 
     return point_dict(point)
+
+def get_all_point():
+    points = Point.query.all()
+    
+    point_list = []
+
+    for point in points:
+        point_list.append(point_dict(point))
     
 # Trash --------------------------
 def get_trash():

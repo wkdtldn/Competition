@@ -86,6 +86,10 @@ def __delete__():
 def point_delete():
     return json.dumps(api.delete_all_point(), ensure_ascii=False)
 
+@app.route('/admin/all_point', methods=['GET'])
+def all_point():
+    return json.dumps(api.get_all_point(), ensure_ascii=False)
+
 # Point --------------------------
 @app.route("/point", methods=['POST'])
 def create_point():
