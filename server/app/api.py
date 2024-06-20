@@ -96,14 +96,14 @@ def get_point():
     today_point_list = []
 
     for point in points:
-        today_point_list.append(user_dict(point))
+        today_point_list.append(point_dict(point))
 
     return today_point_list
 
 def find_mark_point(ID):
     point = Point.query.get(ID)
 
-    return user_dict(point)
+    return point_dict(point)
     
 # Trash --------------------------
 def get_trash():
